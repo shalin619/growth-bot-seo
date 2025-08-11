@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Accordion } from "@/components/ui/accordion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -234,8 +235,16 @@ const Index = () => {
 
       <header className="border-b">
         <div className="container py-6">
-          <h1 className="text-2xl font-semibold tracking-tight">AI Shopify SEO Optimiser Agent</h1>
-          <p className="text-muted-foreground mt-1 max-w-2xl">This AI agent boosts your Shopify store’s visibility, drives more organic traffic, and increases sales by combining advanced SEO intelligence with automated large-scale optimisation — all in under a minute.</p>
+          <div className="flex flex-col gap-4">
+            <div>
+              <h1 className="text-2xl font-semibold tracking-tight">AI Shopify SEO Optimiser Agent</h1>
+              <p className="text-muted-foreground mt-1 max-w-2xl">This AI agent boosts your Shopify store’s visibility, drives more organic traffic, and increases sales by combining advanced SEO intelligence with automated large-scale optimisation — all in under a minute.</p>
+            </div>
+            <nav className="flex items-center gap-6">
+              <Link to="/" className="story-link border-b-2 border-primary text-foreground">Optimise SEO</Link>
+              <Link to="/impact" className="story-link text-muted-foreground hover:text-foreground">Impact Dashboard</Link>
+            </nav>
+          </div>
         </div>
       </header>
 
