@@ -9,9 +9,10 @@ import { StepCard, StepStatus } from "@/components/seo/StepCard";
 import { MetricsCard, MetricItem } from "@/components/seo/MetricsCard";
 import { ResultsDashboard } from "@/components/seo/ResultsDashboard";
 import { Download } from "lucide-react";
-
 const Index = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [running, setRunning] = useState(false);
   const [openItem, setOpenItem] = useState<string | undefined>(undefined);
   const [statuses, setStatuses] = useState<StepStatus[]>(Array(6).fill("pending"));
@@ -21,83 +22,85 @@ const Index = () => {
     pagesOptimised: 0,
     avgRankingBoostPct: 0,
     projectedMonthlyTraffic: 0,
-    roiProjectionPct: 0,
+    roiProjectionPct: 0
   });
-
-  const steps = useMemo(() => [
-    {
-      id: "step1",
-      title: "Keyword Performance Scan",
-      desc: "We’re scanning 200+ ranking factors for your store’s products and blog content, including live SERP positions, volume, difficulty and trends.",
-    },
-    {
-      id: "step2",
-      title: "Competitive Gap Analysis",
-      desc: "We’re analysing the top 3 competitors to uncover missing keywords and content gaps against your store.",
-    },
-    {
-      id: "step3",
-      title: "Content Rewrite & Enhancement",
-      desc: "We’re rewriting product copy, headlines and alt text using competitive data and conversion-focused language.",
-    },
-    {
-      id: "step4",
-      title: "Meta Structure Optimisation",
-      desc: "We’re updating titles, meta descriptions and URLs for optimal length, placement and uniqueness.",
-    },
-    {
-      id: "step5",
-      title: "Schema Markup Deployment",
-      desc: "We’re injecting Product, Review, Breadcrumb and FAQ JSON-LD for enhanced Google rich results.",
-    },
-    {
-      id: "step6",
-      title: "Final Quality Assurance",
-      desc: "We’re validating broken links, alt tags, mobile SEO and fixing minor issues automatically.",
-    },
-  ], []);
-
-  const completed = statuses.filter((s) => s === "done").length;
+  const steps = useMemo(() => [{
+    id: "step1",
+    title: "Keyword Performance Scan",
+    desc: "We’re scanning 200+ ranking factors for your store’s products and blog content, including live SERP positions, volume, difficulty and trends."
+  }, {
+    id: "step2",
+    title: "Competitive Gap Analysis",
+    desc: "We’re analysing the top 3 competitors to uncover missing keywords and content gaps against your store."
+  }, {
+    id: "step3",
+    title: "Content Rewrite & Enhancement",
+    desc: "We’re rewriting product copy, headlines and alt text using competitive data and conversion-focused language."
+  }, {
+    id: "step4",
+    title: "Meta Structure Optimisation",
+    desc: "We’re updating titles, meta descriptions and URLs for optimal length, placement and uniqueness."
+  }, {
+    id: "step5",
+    title: "Schema Markup Deployment",
+    desc: "We’re injecting Product, Review, Breadcrumb and FAQ JSON-LD for enhanced Google rich results."
+  }, {
+    id: "step6",
+    title: "Final Quality Assurance",
+    desc: "We’re validating broken links, alt tags, mobile SEO and fixing minor issues automatically."
+  }], []);
+  const completed = statuses.filter(s => s === "done").length;
   const progress = completed / steps.length;
-
   function rand(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-
   async function runAll() {
     if (running) return;
     setRunning(true);
     setMetrics({});
     setStatuses(Array(steps.length).fill("pending"));
-    setTotals({ keywordsImproved: 0, pagesOptimised: 0, avgRankingBoostPct: 0, projectedMonthlyTraffic: 0, roiProjectionPct: 0 });
-
+    setTotals({
+      keywordsImproved: 0,
+      pagesOptimised: 0,
+      avgRankingBoostPct: 0,
+      projectedMonthlyTraffic: 0,
+      roiProjectionPct: 0
+    });
     for (let i = 0; i < steps.length; i++) {
       const step = steps[i];
       setOpenItem(step.id);
-      setStatuses((prev) => prev.map((s, idx) => (idx === i ? "running" : s)));
+      setStatuses(prev => prev.map((s, idx) => idx === i ? "running" : s));
       // Simulated work
-      await new Promise((res) => setTimeout(res, rand(800, 1400)));
+      await new Promise(res => setTimeout(res, rand(800, 1400)));
 
       // Generate step metrics and accumulate results
       let items: MetricItem[] = [];
-      setTotals((t) => ({ ...t }));
-
+      setTotals(t => ({
+        ...t
+      }));
       if (step.id === "step1") {
         const scanned = rand(1200, 3000);
         const page1 = rand(50, 200);
         const gains = rand(60, 140);
         const drops = rand(10, 40);
         const avgPos = +(Math.random() * 3 - 0.5).toFixed(1); // -0.5 to 2.5
-        items = [
-          { label: "Total keywords scanned", value: scanned },
-          { label: "Keywords on Page 1", value: page1 },
-          { label: "Ranking changes (drops vs. gains)", value: `${drops} drops / ${gains} gains` },
-          { label: "Average position change", value: `${avgPos > 0 ? "+" : ""}${avgPos}` },
-        ];
-        setTotals((t) => ({
+        items = [{
+          label: "Total keywords scanned",
+          value: scanned
+        }, {
+          label: "Keywords on Page 1",
+          value: page1
+        }, {
+          label: "Ranking changes (drops vs. gains)",
+          value: `${drops} drops / ${gains} gains`
+        }, {
+          label: "Average position change",
+          value: `${avgPos > 0 ? "+" : ""}${avgPos}`
+        }];
+        setTotals(t => ({
           ...t,
           keywordsImproved: t.keywordsImproved + gains,
-          projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(100, 400),
+          projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(100, 400)
         }));
       }
       if (step.id === "step2") {
@@ -105,16 +108,23 @@ const Index = () => {
         const opps = rand(40, 120);
         const gaps = rand(10, 30);
         const diff = -rand(1, 5) - Math.random();
-        items = [
-          { label: "Competitors analysed", value: competitors },
-          { label: "New keyword opportunities", value: opps },
-          { label: "Content gaps identified", value: gaps },
-          { label: "Avg. ranking difference", value: `${diff.toFixed(1)} positions` },
-        ];
-        setTotals((t) => ({
+        items = [{
+          label: "Competitors analysed",
+          value: competitors
+        }, {
+          label: "New keyword opportunities",
+          value: opps
+        }, {
+          label: "Content gaps identified",
+          value: gaps
+        }, {
+          label: "Avg. ranking difference",
+          value: `${diff.toFixed(1)} positions`
+        }];
+        setTotals(t => ({
           ...t,
           keywordsImproved: t.keywordsImproved + Math.round(opps * 0.4),
-          projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(120, 300),
+          projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(120, 300)
         }));
       }
       if (step.id === "step3") {
@@ -122,16 +132,23 @@ const Index = () => {
         const density = +(Math.random() * 1.2 + 0.3).toFixed(1);
         const readability = rand(8, 20);
         const ctr = +(Math.random() * 3 + 1.5).toFixed(1);
-        items = [
-          { label: "Product descriptions rewritten", value: rewritten },
-          { label: "Keyword density improvement", value: `+${density}%` },
-          { label: "Readability score improvement", value: `+${readability} pts` },
-          { label: "Predicted CTR lift", value: `+${ctr}%` },
-        ];
-        setTotals((t) => ({
+        items = [{
+          label: "Product descriptions rewritten",
+          value: rewritten
+        }, {
+          label: "Keyword density improvement",
+          value: `+${density}%`
+        }, {
+          label: "Readability score improvement",
+          value: `+${readability} pts`
+        }, {
+          label: "Predicted CTR lift",
+          value: `+${ctr}%`
+        }];
+        setTotals(t => ({
           ...t,
           pagesOptimised: t.pagesOptimised + rewritten,
-          projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(150, 400),
+          projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(150, 400)
         }));
       }
       if (step.id === "step4") {
@@ -139,63 +156,83 @@ const Index = () => {
         const dups = rand(5, 30);
         const metaScore = rand(10, 25);
         const traffic = +(Math.random() * 8 + 4).toFixed(1);
-        items = [
-          { label: "Pages with meta optimised", value: pagesMeta },
-          { label: "Duplicate metas removed", value: dups },
-          { label: "Avg. meta score improvement", value: `+${metaScore}%` },
-          { label: "Projected organic traffic gain", value: `+${traffic}%` },
-        ];
-        setTotals((t) => ({
+        items = [{
+          label: "Pages with meta optimised",
+          value: pagesMeta
+        }, {
+          label: "Duplicate metas removed",
+          value: dups
+        }, {
+          label: "Avg. meta score improvement",
+          value: `+${metaScore}%`
+        }, {
+          label: "Projected organic traffic gain",
+          value: `+${traffic}%`
+        }];
+        setTotals(t => ({
           ...t,
           pagesOptimised: t.pagesOptimised + pagesMeta,
-          projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(200, 500),
+          projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(200, 500)
         }));
       }
       if (step.id === "step5") {
         const schemaCount = rand(30, 120);
-        items = [
-          { label: "Products with schema added", value: schemaCount },
-          { label: "Schema types deployed", value: "Product, Review, Breadcrumb, FAQ" },
-          { label: "SERP feature eligibility increase", value: "+22%" },
-        ];
-        setTotals((t) => ({
+        items = [{
+          label: "Products with schema added",
+          value: schemaCount
+        }, {
+          label: "Schema types deployed",
+          value: "Product, Review, Breadcrumb, FAQ"
+        }, {
+          label: "SERP feature eligibility increase",
+          value: "+22%"
+        }];
+        setTotals(t => ({
           ...t,
           pagesOptimised: t.pagesOptimised + schemaCount,
-          projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(80, 220),
+          projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(80, 220)
         }));
       }
       if (step.id === "step6") {
         const fixed = rand(15, 80);
         const mobile = rand(8, 18);
         const pass = rand(120, 400);
-        items = [
-          { label: "SEO errors fixed", value: fixed },
-          { label: "Mobile performance score improvement", value: `+${mobile}` },
-          { label: "Pages passing all audits", value: pass },
-        ];
-        setTotals((t) => ({
+        items = [{
+          label: "SEO errors fixed",
+          value: fixed
+        }, {
+          label: "Mobile performance score improvement",
+          value: `+${mobile}`
+        }, {
+          label: "Pages passing all audits",
+          value: pass
+        }];
+        setTotals(t => ({
           ...t,
           pagesOptimised: t.pagesOptimised + pass,
-          projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(100, 300),
+          projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(100, 300)
         }));
       }
-
-      setMetrics((prev) => ({ ...prev, [step.id]: items }));
-      setStatuses((prev) => prev.map((s, idx) => (idx === i ? "done" : s)));
+      setMetrics(prev => ({
+        ...prev,
+        [step.id]: items
+      }));
+      setStatuses(prev => prev.map((s, idx) => idx === i ? "done" : s));
     }
 
     // Finalise totals
-    setTotals((t) => ({
+    setTotals(t => ({
       ...t,
       avgRankingBoostPct: +(Math.random() * 14 + 12).toFixed(1),
-      roiProjectionPct: +(Math.random() * 180 + 120).toFixed(0) as unknown as number,
+      roiProjectionPct: +(Math.random() * 180 + 120).toFixed(0) as unknown as number
     }));
-
     setRunning(false);
     setOpenItem(undefined);
-    toast({ title: "SEO optimisation complete", description: "Your store’s SEO has been optimised. Review the results dashboard below." });
+    toast({
+      title: "SEO optimisation complete",
+      description: "Your store’s SEO has been optimised. Review the results dashboard below."
+    });
   }
-
   function downloadReport() {
     const payload = {
       generatedAt: new Date().toISOString(),
@@ -203,11 +240,13 @@ const Index = () => {
         id: s.id,
         title: s.title,
         status: statuses[i],
-        metrics: metrics[s.id] ?? [],
+        metrics: metrics[s.id] ?? []
       })),
-      totals,
+      totals
     };
-    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const blob = new Blob([JSON.stringify(payload, null, 2)], {
+      type: "application/json"
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -215,9 +254,7 @@ const Index = () => {
     a.click();
     URL.revokeObjectURL(url);
   }
-
-  return (
-    <>
+  return <>
       <Helmet>
         <title>AI Shopify SEO Optimiser Agent</title>
         <meta name="description" content="One-click, end-to-end AI SEO optimisation for Shopify: keyword scan, competitive analysis, content rewrite, meta & schema, QA and results dashboard." />
@@ -228,7 +265,11 @@ const Index = () => {
           "name": "AI Shopify SEO Optimiser Agent",
           "applicationCategory": "SEO Tool",
           "operatingSystem": "Web",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
           "description": "Automated, multi-agent SEO optimisation for Shopify stores."
         })}</script>
       </Helmet>
@@ -238,10 +279,10 @@ const Index = () => {
           <div className="flex flex-col gap-4">
             <div>
               <h1 className="text-2xl font-semibold tracking-tight">AI Shopify SEO Optimiser Agent</h1>
-              <p className="text-muted-foreground mt-1 max-w-2xl">This AI agent boosts your Shopify store’s visibility, drives more organic traffic, and increases sales by combining advanced SEO intelligence with automated large-scale optimisation — all in under a minute.</p>
+              <p className="text-muted-foreground mt-1 max-w-2xl">This AI agent boosts your Shopify store’s visibility, drives more organic traffic, and increases sales by combining advanced SEO intelligence with automated large-scale optimization — all in under a minute.</p>
             </div>
             <nav className="flex items-center gap-6">
-              <Link to="/" className="story-link border-b-2 border-primary text-foreground">Optimise SEO</Link>
+              <Link to="/" className="story-link border-b-2 border-primary text-foreground">Optimize SEO</Link>
               <Link to="/impact" className="story-link text-muted-foreground hover:text-foreground">Impact Dashboard</Link>
             </nav>
           </div>
@@ -272,35 +313,17 @@ const Index = () => {
           <h2 id="workflow" className="sr-only">Workflow</h2>
 
           <Accordion type="single" collapsible value={openItem} onValueChange={setOpenItem} className="space-y-3">
-            {steps.map((s, i) => (
-              <StepCard
-                key={s.id}
-                value={s.id}
-                stepNumber={i + 1}
-                title={s.title}
-                description={s.desc}
-                status={statuses[i]}
-              >
+            {steps.map((s, i) => <StepCard key={s.id} value={s.id} stepNumber={i + 1} title={s.title} description={s.desc} status={statuses[i]}>
                 {metrics[s.id] && <MetricsCard items={metrics[s.id]} />}
-              </StepCard>
-            ))}
+              </StepCard>)}
           </Accordion>
         </section>
 
         <section aria-labelledby="results">
           <h2 id="results" className="sr-only">Results</h2>
-          <ResultsDashboard
-            keywordsImproved={totals.keywordsImproved}
-            pagesOptimised={totals.pagesOptimised}
-            avgRankingBoostPct={totals.avgRankingBoostPct}
-            projectedMonthlyTraffic={totals.projectedMonthlyTraffic}
-            roiProjectionPct={totals.roiProjectionPct}
-            progress={progress}
-          />
+          <ResultsDashboard keywordsImproved={totals.keywordsImproved} pagesOptimised={totals.pagesOptimised} avgRankingBoostPct={totals.avgRankingBoostPct} projectedMonthlyTraffic={totals.projectedMonthlyTraffic} roiProjectionPct={totals.roiProjectionPct} progress={progress} />
         </section>
       </main>
-    </>
-  );
+    </>;
 };
-
 export default Index;
