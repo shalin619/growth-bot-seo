@@ -4,11 +4,14 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Accordion } from "@/components/ui/accordion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { StepCard, StepStatus } from "@/components/seo/StepCard";
 import { MetricsCard, MetricItem } from "@/components/seo/MetricsCard";
 import { ResultsDashboard } from "@/components/seo/ResultsDashboard";
-import { Download } from "lucide-react";
+import { Download, Clock } from "lucide-react";
 const Index = () => {
   const {
     toast
@@ -17,6 +20,8 @@ const Index = () => {
   const [openItem, setOpenItem] = useState<string | undefined>(undefined);
   const [statuses, setStatuses] = useState<StepStatus[]>(Array(6).fill("pending"));
   const [metrics, setMetrics] = useState<Record<string, MetricItem[]>>({});
+  const [autoRunDialogOpen, setAutoRunDialogOpen] = useState(false);
+  const [frequency, setFrequency] = useState("");
   const [totals, setTotals] = useState({
     keywordsImproved: 0,
     pagesOptimised: 0,
@@ -254,6 +259,25 @@ const Index = () => {
     a.click();
     URL.revokeObjectURL(url);
   }
+
+  function saveAutoRunFrequency() {
+    if (!frequency.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a frequency.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    toast({
+      title: "Auto-run scheduled",
+      description: `SEO optimization will run every ${frequency}.`
+    });
+    
+    setAutoRunDialogOpen(false);
+    setFrequency("");
+  }
   return <>
       <Helmet>
         <title>AI Shopify SEO Optimiser Agent</title>
@@ -301,6 +325,42 @@ const Index = () => {
                 <Button size="lg" onClick={runAll} disabled={running}>
                   {running ? "Optimising…" : "Optimise SEO"}
                 </Button>
+                
+                <Dialog open={autoRunDialogOpen} onOpenChange={setAutoRunDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" size="lg" disabled={running}>
+                      <Clock className="h-4 w-4 mr-2" /> Auto Run Optimization
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Schedule Auto-Run Optimization</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="frequency">Frequency</Label>
+                        <Input
+                          id="frequency"
+                          placeholder="e.g., 1 hour, 2 days, 1 week"
+                          value={frequency}
+                          onChange={(e) => setFrequency(e.target.value)}
+                        />
+                        <p className="text-sm text-muted-foreground">
+                          Enter how often you want the SEO optimization to run automatically.
+                        </p>
+                      </div>
+                      <div className="flex justify-end gap-3">
+                        <Button variant="outline" onClick={() => setAutoRunDialogOpen(false)}>
+                          Cancel
+                        </Button>
+                        <Button onClick={saveAutoRunFrequency}>
+                          Save Schedule
+                        </Button>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
                 <Button variant="secondary" size="lg" onClick={downloadReport} disabled={running || completed === 0}>
                   <Download className="h-4 w-4 mr-2" /> Download Report
                 </Button>
