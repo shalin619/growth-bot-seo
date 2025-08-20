@@ -158,7 +158,7 @@ const ImpactDashboard = () => {
   }, [pgSort]);
   const summary = {
     keywordsImproved: 124,
-    pagesOptimised: 23,
+    pagesOptimized: 23,
     avgRankingChange: +3.4,
     projectedTraffic: 4500
   };
@@ -189,11 +189,11 @@ const ImpactDashboard = () => {
       description: "A mock email was sent to your team with the latest impact results."
     });
   }
-  const activeTab = (tab: "optimise" | "impact") => tab === "impact" ? "border-b-2 border-primary text-foreground" : "text-muted-foreground hover:text-foreground";
+  const activeTab = (tab: "optimize" | "impact") => tab === "impact" ? "border-b-2 border-primary text-foreground" : "text-muted-foreground hover:text-foreground";
   return <>
       <Helmet>
         <title>SEO Impact Dashboard | AI Shopify SEO Agent</title>
-        <meta name="description" content="Real performance metrics and ROI from your SEO optimisation activities. View trends, traffic, conversions and ROI." />
+        <meta name="description" content="Real performance metrics and ROI from your SEO optimization activities. View trends, traffic, conversions and ROI." />
         <link rel="canonical" href={(typeof window !== "undefined" ? window.location.origin : "") + "/impact"} />
       </Helmet>
 
@@ -202,10 +202,10 @@ const ImpactDashboard = () => {
           <div className="flex flex-col gap-4">
             <div>
               <h1 className="text-2xl font-semibold tracking-tight">SEO Impact Dashboard</h1>
-              <p className="text-muted-foreground mt-1 max-w-2xl">Real performance metrics and ROI from your SEO optimisation activities.</p>
+              <p className="text-muted-foreground mt-1 max-w-2xl">Real performance metrics and ROI from your SEO optimization activities.</p>
             </div>
             <nav className="flex items-center gap-6">
-              <Link to="/" className={`story-link ${activeTab("optimise")}`}>Optimise SEO</Link>
+              <Link to="/" className={`story-link ${activeTab("optimize")}`}>Optimize SEO</Link>
               <Link to="/impact" className={`story-link ${activeTab("impact")}`}>Impact Dashboard</Link>
             </nav>
           </div>
@@ -240,7 +240,7 @@ const ImpactDashboard = () => {
         <section>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <SummaryCard title="Keywords Improved" value={`+${summary.keywordsImproved}`} sub="vs previous period" trend="up" />
-            <SummaryCard title="Pages Optimised" value={`${summary.pagesOptimised}`} sub="fully optimised" trend="up" />
+            <SummaryCard title="Pages Optimized" value={`${summary.pagesOptimized}`} sub="fully optimized" trend="up" />
             <SummaryCard title="Avg Ranking Change" value={`+${summary.avgRankingChange} positions`} sub="overall avg change" trend="up" />
             <SummaryCard title="Projected Monthly Traffic" value={`+${summary.projectedTraffic.toLocaleString()} visits`} sub="estimated" trend="up" />
           </div>

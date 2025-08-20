@@ -24,7 +24,7 @@ const Index = () => {
   const [frequency, setFrequency] = useState("");
   const [totals, setTotals] = useState({
     keywordsImproved: 0,
-    pagesOptimised: 0,
+    pagesOptimized: 0,
     avgRankingBoostPct: 0,
     projectedMonthlyTraffic: 0,
     roiProjectionPct: 0
@@ -43,7 +43,7 @@ const Index = () => {
     desc: "We’re rewriting product copy, headlines and alt text using competitive data and conversion-focused language."
   }, {
     id: "step4",
-    title: "Meta Structure Optimisation",
+    title: "Meta Structure Optimization",
     desc: "We’re updating titles, meta descriptions and URLs for optimal length, placement and uniqueness."
   }, {
     id: "step5",
@@ -66,7 +66,7 @@ const Index = () => {
     setStatuses(Array(steps.length).fill("pending"));
     setTotals({
       keywordsImproved: 0,
-      pagesOptimised: 0,
+      pagesOptimized: 0,
       avgRankingBoostPct: 0,
       projectedMonthlyTraffic: 0,
       roiProjectionPct: 0
@@ -152,7 +152,7 @@ const Index = () => {
         }];
         setTotals(t => ({
           ...t,
-          pagesOptimised: t.pagesOptimised + rewritten,
+          pagesOptimized: t.pagesOptimized + rewritten,
           projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(150, 400)
         }));
       }
@@ -162,7 +162,7 @@ const Index = () => {
         const metaScore = rand(10, 25);
         const traffic = +(Math.random() * 8 + 4).toFixed(1);
         items = [{
-          label: "Pages with meta optimised",
+          label: "Pages with meta optimized",
           value: pagesMeta
         }, {
           label: "Duplicate metas removed",
@@ -176,7 +176,7 @@ const Index = () => {
         }];
         setTotals(t => ({
           ...t,
-          pagesOptimised: t.pagesOptimised + pagesMeta,
+          pagesOptimized: t.pagesOptimized + pagesMeta,
           projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(200, 500)
         }));
       }
@@ -194,7 +194,7 @@ const Index = () => {
         }];
         setTotals(t => ({
           ...t,
-          pagesOptimised: t.pagesOptimised + schemaCount,
+          pagesOptimized: t.pagesOptimized + schemaCount,
           projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(80, 220)
         }));
       }
@@ -214,7 +214,7 @@ const Index = () => {
         }];
         setTotals(t => ({
           ...t,
-          pagesOptimised: t.pagesOptimised + pass,
+          pagesOptimized: t.pagesOptimized + pass,
           projectedMonthlyTraffic: t.projectedMonthlyTraffic + rand(100, 300)
         }));
       }
@@ -255,7 +255,7 @@ const Index = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "seo-optimisation-report.json";
+    a.download = "seo-optimization-report.json";
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -280,13 +280,13 @@ const Index = () => {
   }
   return <>
       <Helmet>
-        <title>AI Shopify SEO Optimiser Agent</title>
-        <meta name="description" content="One-click, end-to-end AI SEO optimisation for Shopify: keyword scan, competitive analysis, content rewrite, meta & schema, QA and results dashboard." />
+        <title>AI Shopify SEO Optimizer Agent</title>
+        <meta name="description" content="One-click, end-to-end AI SEO optimization for Shopify: keyword scan, competitive analysis, content rewrite, meta & schema, QA and results dashboard." />
         <link rel="canonical" href={(typeof window !== "undefined" ? window.location.origin : "") + "/"} />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "SoftwareApplication",
-          "name": "AI Shopify SEO Optimiser Agent",
+          "name": "AI Shopify SEO Optimizer Agent",
           "applicationCategory": "SEO Tool",
           "operatingSystem": "Web",
           "offers": {
@@ -294,7 +294,7 @@ const Index = () => {
             "price": "0",
             "priceCurrency": "USD"
           },
-          "description": "Automated, multi-agent SEO optimisation for Shopify stores."
+          "description": "Automated, multi-agent SEO optimization for Shopify stores."
         })}</script>
       </Helmet>
 
@@ -302,7 +302,7 @@ const Index = () => {
         <div className="container py-6">
           <div className="flex flex-col gap-4">
             <div>
-              <h1 className="text-2xl font-semibold tracking-tight">AI Shopify SEO Optimiser Agent</h1>
+              <h1 className="text-2xl font-semibold tracking-tight">AI Shopify SEO Optimizer Agent</h1>
               <p className="text-muted-foreground mt-1 max-w-2xl">This AI agent boosts your Shopify store’s visibility, drives more organic traffic, and increases sales by combining advanced SEO intelligence with automated large-scale optimization — all in under a minute.</p>
             </div>
             <nav className="flex items-center gap-6">
@@ -319,11 +319,11 @@ const Index = () => {
             <CardContent className="py-6 flex flex-col md:flex-row items-start md:items-center gap-4 justify-between">
               <div>
                 <div className="text-sm text-muted-foreground">One-click automation</div>
-                <div className="text-lg font-medium">Run complete end-to-end SEO optimisation</div>
+                <div className="text-lg font-medium">Run complete end-to-end SEO optimization</div>
               </div>
               <div className="flex items-center gap-3">
                 <Button size="lg" onClick={runAll} disabled={running}>
-                  {running ? "Optimising…" : "Optimise SEO"}
+                  {running ? "Optimizing…" : "Optimize SEO"}
                 </Button>
                 
                 <Dialog open={autoRunDialogOpen} onOpenChange={setAutoRunDialogOpen}>
@@ -381,7 +381,7 @@ const Index = () => {
 
         <section aria-labelledby="results">
           <h2 id="results" className="sr-only">Results</h2>
-          <ResultsDashboard keywordsImproved={totals.keywordsImproved} pagesOptimised={totals.pagesOptimised} avgRankingBoostPct={totals.avgRankingBoostPct} projectedMonthlyTraffic={totals.projectedMonthlyTraffic} roiProjectionPct={totals.roiProjectionPct} progress={progress} />
+          <ResultsDashboard keywordsImproved={totals.keywordsImproved} pagesOptimized={totals.pagesOptimized} avgRankingBoostPct={totals.avgRankingBoostPct} projectedMonthlyTraffic={totals.projectedMonthlyTraffic} roiProjectionPct={totals.roiProjectionPct} progress={progress} />
         </section>
       </main>
     </>;

@@ -4,7 +4,7 @@ import { TrendingUp, BarChart3, Rocket, LineChart, Percent } from "lucide-react"
 
 export interface ResultsTotals {
   keywordsImproved: number;
-  pagesOptimised: number;
+  pagesOptimized: number;
   avgRankingBoostPct: number; // 0-100
   projectedMonthlyTraffic: number;
   roiProjectionPct: number; // 0-100+
@@ -13,7 +13,7 @@ export interface ResultsTotals {
 
 export const ResultsDashboard = ({
   keywordsImproved,
-  pagesOptimised,
+  pagesOptimized,
   avgRankingBoostPct,
   projectedMonthlyTraffic,
   roiProjectionPct,
@@ -35,7 +35,7 @@ export const ResultsDashboard = ({
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <StatCard icon={<TrendingUp className="h-5 w-5" />} label="Keywords improved" value={keywordsImproved.toLocaleString()} />
-          <StatCard icon={<BarChart3 className="h-5 w-5" />} label="Pages optimised" value={pagesOptimised.toLocaleString()} />
+          <StatCard icon={<BarChart3 className="h-5 w-5" />} label="Pages optimized" value={pagesOptimized.toLocaleString()} />
           <StatCard icon={<LineChart className="h-5 w-5" />} label="Avg. ranking boost" value={`${avgRankingBoostPct.toFixed(1)}%`} />
           <StatCard icon={<Rocket className="h-5 w-5" />} label="Projected monthly traffic" value={projectedMonthlyTraffic.toLocaleString()} />
           <StatCard icon={<Percent className="h-5 w-5" />} label="ROI projection" value={`${roiProjectionPct.toFixed(0)}%`} />
